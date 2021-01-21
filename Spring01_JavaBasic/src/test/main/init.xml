@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 아래의 코드는 myWeapon=new WeaponImpl() 이라고 생각하면 된다. -->
+	<bean id="myWeapon" class="test.mypac.GoodWeapon"/>
+</beans>
+<!-- 
+class="weapon ctrl+space 자동완성"
+이 객체를 생성해서 myWeapon 이라는 id값으로 사용하겠다는 의미
+class="test.mypac.GoodWeapon" 수정
+MainClass2 = 강력하게 공격하기 실행
+ -->
