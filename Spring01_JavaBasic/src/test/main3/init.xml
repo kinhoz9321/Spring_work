@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Car 객체를 생성해서 관리되게 하려면 어떻게 해야할까? -->
+	
+	<!-- 아래의 코드는 
+		e1=new Engine() 
+	과 같다 -->
+	<bean id="e1" class="test.auto.Engine"/>
+	
+	<!-- 아래의 코드는 
+		new Car(e1) 
+	과 같다. -->
+	<bean id="car1" class="test.auto.Car">
+		<constructor-arg name="engine" ref="e1"/>
+	</bean>
+	
+	<!-- 
+		자바 코드로 환산했을 때 이런 모양. 원리 익히기.
+		sedan1=new Sedan();
+		sedan1.setName("소나타");
+		sedan1.setWeight(1000);
+		sedan1.setEngine(e1);
+	 -->
+	<bean id="sedan1" class="test.auto.Sedan">
+		<property name="name" value="소나타"/>
+		<property name="weight" value="1000"/>
+		<property name="engine" ref="e1"/>
+	</bean>
+</beans>
+<!-- 
+<constructor-arg> 생성자 인자 argument(인자)
+id="e1" => ref="e1" Reference(참조)
+public Car(Engine engine) engine => name="engine"을 가리킴.
+<property name="weight" value="1000"/> => name=setter 메소드를 가리킴.
+
+xml 문서에서 뭔가를 설정하는 방법을 배우는 중
+
+숫자나 문자는 value로 전달. 
+다른 참조값은 ref로 전달
+value는 setter 메소드의 인자 타입을 보고 문자인지 숫자인지 알아서 정해줌.
+set = property 와 관련이 있다.
+
+property name => setName
+property weight => setWeight
+property engine => setEngine
+ -->
