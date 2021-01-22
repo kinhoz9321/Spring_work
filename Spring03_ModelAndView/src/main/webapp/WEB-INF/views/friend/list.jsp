@@ -20,8 +20,8 @@ http://localhost:8888/spring03/resources/css/bootstrap.css
 			<li>${tmp }</li>
 		</c:forEach>
 	</ul>
-	<a href="../home.do">인덱스로 가기(상대경로)</a>
-	<a href="${pageContext.request.contextPath }/">인덱스로 가기</a>
+	<a href="../home.do">인덱스로 가기(상대경로)</a><br />
+	<a href="${pageContext.request.contextPath }/">인덱스로 가기(최상위 경로)</a>
 </div>
 </body>
 </html>
