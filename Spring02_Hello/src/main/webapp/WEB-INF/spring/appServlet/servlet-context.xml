@@ -21,12 +21,26 @@
 		아래의 setter 메소드를 호출을 하는 설정이다. "/WEB-INF/views/" 바꿀 일은 없겠지만, 바꾸고 싶으면 바꿔도 됨.
 		.setPrefix("/WEB-INF/views/")
 		.setSuffix(".jsp")
+		
+		bean = 객체
 	 -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
+	<!-- 
+		[ Spring Bean  Container 에서 관리할 객체를 생성할 클래스를 찾기 ]
+		찾아지면 알아서 객체를 종류별로 1개 (single ton)만 생성해서 관리한다.
+		관리한다는 의미는 필요한 곳에 DI(의존성 주입)을 해준다는 의미이다.
+		
+		클래스 위에 @Controller, @Service, @Repository, @Component ... 등등
+		의 어노테이션을 붙여놓으면 component scan 할 때 인식이 되어서 
+		객체가 자동 생성되고 container 에서 관리가 된다.
+		
+		base-package="scan할 패키지명"
+		
+		패키지명을 명시하면 하위 패키지까지 알아서 다 scan 한다.
+	 -->
 	<context:component-scan base-package="com.gura.spring01" />
 	
 	
