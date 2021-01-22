@@ -17,14 +17,14 @@
 		<button type="submit">추가</button>
 	</form>
 	<h1>친구 추가 폼 입니다.2</h1>
-	<form action="insert.do" method="post"><!-- /friend/insert.do -->
+	<form action="insert2.do" method="post"><!-- /friend/insert.do -->
 		<input type="text" name="num" placeholder="번호 입력"/>
 		<input type="text" name="name" placeholder="이름 입력"/>
 		<input type="text" name="phone" placeholder="전화 번호 입력"/>
 		<button type="submit">추가2</button>
 	</form>
 	<h1>친구 추가 폼 입니다.3</h1>
-	<form action="insert.do" method="post"><!-- /friend/insert.do -->
+	<form action="insert3.do" method="post"><!-- /friend/insert.do -->
 		<input type="text" name="num" placeholder="번호 입력"/>
 		<input type="text" name="name" placeholder="이름 입력"/>
 		<input type="text" name="phone" placeholder="전화 번호 입력"/>
