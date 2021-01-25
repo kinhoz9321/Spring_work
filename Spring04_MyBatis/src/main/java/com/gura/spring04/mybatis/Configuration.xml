@@ -4,4 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	
+	<!-- 사용할 Mapper.xml 이 어디에 있는지 명시해야 한다. -->
+	<mappers>
+		<mapper resource="com/gura/spring04/mybatis/MemberMapper.xml"/>
+	</mappers>
 </configuration>
