@@ -9,6 +9,7 @@
 </head>
 <body>
 <div class="container">
+	<a href="insertform.do">회원추가하러 가기</a>
 	<h1>회원 목록 입니다.</h1>
 	<table>
 		<thead>
@@ -16,6 +17,8 @@
 				<th>번호</th>
 				<th>이름</th>
 				<th>주소</th>
+				<th>수정</th>
+				<th>삭제</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -24,10 +27,20 @@
 					<td>${tmp.num }</td>
 					<td>${tmp.name }</td>
 					<td>${tmp.addr }</td>
+					<td><a href="updateform.do?num=${tmp.num }">수정</a></td>
+					<td><a href="javascript:deleteConfirm(${tmp.num })">삭제</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 </div>
+<script>
+	function deleteConfirm(num){
+		let isDelete=confirm(num+" 번 회원을 삭제 하시겠습니까?");
+		if(isDelete){
+			location.href="delete.do?num="+num;
+		}
+	}
+</script>
 </body>
 </html>
