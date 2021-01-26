@@ -11,7 +11,7 @@ import com.gura.spring04.member.dto.MemberDto;
 //component scan 을 통해서 bean 이 되도록 어노테이션을 붙여준다.
 //Dao 에는 @Repository 라는 어노테이션을 붙여야 한다.
 @Repository
-public class MemberDaoImpl implements MemberDao{
+public class MemberDaoImpl implements MemberDao{ //구현 클래스
 	/*sqlsession type DI SqlSessionTemplate servlet-context.xml*/
 	
 	/*
