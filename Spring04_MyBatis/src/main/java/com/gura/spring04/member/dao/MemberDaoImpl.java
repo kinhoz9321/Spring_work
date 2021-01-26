@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.gura.spring04.exception.DBFailException;
 import com.gura.spring04.member.dto.MemberDto;
 
 //component scan 을 통해서 bean 이 되도록 어노테이션을 붙여준다.
@@ -71,8 +72,10 @@ public class MemberDaoImpl implements MemberDao{ //구현 클래스
 		 * sql 의 id => delete
 		 * parameterType => int
 		 */
-		session.delete("member.delete", num);
-		
+		int count=session.delete("member.delete", num);
+		if(count==0) {
+			throw new DBFailException("삭제 실패 되었습니다.(삭제할 회원정보가 없습니다.)");
+		}
 	}
 
 	@Override
