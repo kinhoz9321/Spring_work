@@ -7,6 +7,6 @@ package com.gura.spring04.exception;
 public class DBFailException extends RuntimeException{
 	//생성자
 	public DBFailException(String message) {
-		super(message);
+		super(message);//RuntimeException 클래스의 생성자에 message를 보내는 것
 	}
 }

@@ -76,6 +76,11 @@ public class MemberDaoImpl implements MemberDao{ //구현 클래스
 		if(count==0) {
 			throw new DBFailException("삭제 실패 되었습니다.(삭제할 회원정보가 없습니다.)");
 		}
+		/*
+		 * 예외를 발생시키는 방법
+		 * throw (예약어)
+		 * 예외 객체 생성해서 던지기.
+		 */
 	}
 
 	@Override

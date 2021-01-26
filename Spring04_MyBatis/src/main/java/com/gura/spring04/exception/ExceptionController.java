@@ -3,11 +3,11 @@ package com.gura.spring04.exception;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 /*
- * 예외가 발생했을 때 직접 에러 페이지를 응답하려면 예외 컨트롤러를 정의해서 응답할 수 있다.
+ * '예외가 발생했을 때 직접 에러 페이지를 응답하려면' 예외 컨트롤러를 정의해서 응답할 수 있다. ***
  * 예외 컨트롤러를 만들 때는 @ControllerAdvice 어노테이션을 붙여서 만들면 된다.
  */
 import org.springframework.web.servlet.ModelAndView;
-@ControllerAdvice //새로운 어노테이션 등장
+@ControllerAdvice //새로운 어노테이션 등장 bean 이 됨.
 public class ExceptionController {
 	/*
 	 * 스프링 프레임워크가 동작하는 중에 DBFailException type 의 예외가
