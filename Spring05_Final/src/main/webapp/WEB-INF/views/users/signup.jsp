@@ -13,7 +13,7 @@
 		<%-- 확인. requestScope 생략 가능 --%>
 		<strong>${requestScope.dto.id }</strong>
 		님의 정보를 추가 했습니다.
-		<a href="${pageContext.request.contextPath }/home.do">인덱스 가기</a>
+		<a href="${pageContext.request.contextPath }/users/loginform.do">로그인 하러 가기</a>
 	</p>
 </div>
 </body>
