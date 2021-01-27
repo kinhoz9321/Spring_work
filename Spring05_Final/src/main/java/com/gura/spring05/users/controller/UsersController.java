@@ -28,6 +28,13 @@ public class UsersController {
 	@Autowired
 	private UsersDao dao;
 	
+	//회원 탈퇴 요청 처리
+	@RequestMapping("/users/private/delete")
+	public String delete(HttpSession session) {
+		service.deleteUser(session);
+		return "users/private/delete";
+	}
+	
 	//개인정보 보기 요청 처리
 	@RequestMapping("/users/private/info")
 	public ModelAndView infoLogic(ModelAndView mView, HttpSession session) {//모델앤뷰에 개인정보가 담기면 된다.

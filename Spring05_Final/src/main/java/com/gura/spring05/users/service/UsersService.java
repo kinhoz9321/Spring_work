@@ -19,4 +19,6 @@ public interface UsersService {
 	public void loginLogic(HttpServletRequest request, HttpServletResponse response);
 	//개인정보를 ModelAndView 객체에 담아주는 메소드
 	public void getInfo(ModelAndView mView, HttpSession session);
+	//개인정보를 탈퇴하는 메소드
+	public void deleteUser(HttpSession session);
 }
