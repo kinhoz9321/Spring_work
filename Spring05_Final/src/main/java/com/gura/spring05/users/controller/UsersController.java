@@ -28,6 +28,14 @@ public class UsersController {
 	@Autowired
 	private UsersDao dao;
 	
+	//개인정보 보기 요청 처리
+	@RequestMapping("/users/private/info")
+	public ModelAndView infoLogic(ModelAndView mView, HttpSession session) {//모델앤뷰에 개인정보가 담기면 된다.
+		service.getInfo(mView, session);
+		mView.setViewName("users/private/info");
+		return mView;
+	}
+	
 	//로그아웃 요청 처리
 	@RequestMapping("/users/logout")
 	public String logout(HttpSession session) {
@@ -36,7 +44,6 @@ public class UsersController {
 		
 		return "users/logout";
 	}
-	
 	
 	//로그인 요청 처리
 	@RequestMapping(value="/users/login", method=RequestMethod.POST)

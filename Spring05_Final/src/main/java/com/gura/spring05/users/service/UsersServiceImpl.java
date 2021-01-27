@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -116,6 +117,15 @@ public class UsersServiceImpl implements UsersService{
 		request.setAttribute("url", url);
 		request.setAttribute("isValid", isValid);
 	}
-	
-	
+
+	@Override
+	public void getInfo(ModelAndView mView, HttpSession session) {
+		//로그인된 아이디를 읽어와서
+		String id=(String)session.getAttribute("id");
+		//개인정보를 읽어온다
+		UsersDto dto=dao.getData(id);
+		//읽어온 정보를 ModelAndView 객체에 담아준다.
+		mView.addObject("dto", dto);
+	}
+
 }

@@ -2,6 +2,7 @@ package com.gura.spring05.users.service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,4 +17,6 @@ public interface UsersService {
 	public void loginformLogic(HttpServletRequest request, ModelAndView mView);
 	//로그인 관련 처리를 하는 메소드
 	public void loginLogic(HttpServletRequest request, HttpServletResponse response);
+	//개인정보를 ModelAndView 객체에 담아주는 메소드
+	public void getInfo(ModelAndView mView, HttpSession session);
 }

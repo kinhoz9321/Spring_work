@@ -27,7 +27,7 @@
 		</colgroup>
 		<tr>
 			<th>아이디</th>
-			<td></td>
+			<td>${sessionScope.id }</td><!-- dto.id 안됨 -->
 		</tr>
 		<tr>
 			<th>프로필 이미지</th>
@@ -41,25 +41,25 @@
 		</tr>
 		<tr>
 			<th>비밀번호</th>
-			<td><a href="pwd_updateform.jsp">수정하기</a></td>
+			<td><a href="pwd_updateform.do">수정하기</a></td>
 		</tr>
 		<tr>
 			<th>이메일</th>
-			<td></td>
+			<td>${dto.email }</td>
 		</tr>
 		<tr>
 			<th>가입일</th>
-			<td></td>
+			<td>${dto.regdate }</td>
 		</tr>
 	</table>
-	<a href="updateform.jsp">개인 정보 수정</a>
+	<a href="updateform.do">개인 정보 수정</a>
 	<a href="javascript:deleteConfirm()">탈퇴</a>
 </div>
 <script>
 	function deleteConfirm(){
 		let isDelete=confirm(" 회원님 탈퇴 하시겠습니까?");
 		if(isDelete){
-			location.href="delete.jsp";
+			location.href="${pageContext.request.contextPath }/users/private/delete.do";
 		}
 	}
 </script>
