@@ -1,7 +1,10 @@
 package com.gura.spring05.users.service;
 
+import java.net.URLEncoder;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,6 +64,57 @@ public class UsersServiceImpl implements UsersService{
 		mView.addObject("url", url);
 		mView.addObject("savedId", savedId);
 		mView.addObject("savedPwd", savedPwd);
+	}
+
+	@Override
+	public void loginLogic(HttpServletRequest request, HttpServletResponse response) {
+		//로그인후 가야하는 목적지 정보
+		String url=request.getParameter("url");
+		//로그인 실패를 대비해서 목적지 정보를 인코딩한 결과도 준비 한다.
+		String encodedUrl=URLEncoder.encode(url);
+		//1. 폼전송되는 아이디와 비밀번호를 읽어온다.
+		String id=request.getParameter("id");
+		String pwd=request.getParameter("pwd");
+		UsersDto dto=new UsersDto();
+		dto.setId(id);
+		dto.setPwd(pwd);
+		
+		//2. DB 에 실제로 존재하는 (유효한) 정보인지 확인한다.
+		boolean isValid=dao.isValid(dto);
+		
+		//3. 유효한 정보이면 로그인 처리를 하고 응답 그렇지 않으면 아이디혹은 비밀번호가 틀렸다고 응답
+		if(isValid) {
+			//HttpSession 객체를 이용해서 로그인 처리를 한다.
+			request.getSession().setAttribute("id", id);
+			//HttpSession session 하거나 request.getSession 하면 된다.
+		}
+		
+		//체크박스를 체크 하지 않았으면 null 이다. 
+		String isSave=request.getParameter("isSave");
+		
+		if(isSave == null){//체크 박스를 체크 안했다면
+			//저장된 쿠키 삭제 
+			Cookie idCook=new Cookie("savedId", id);
+			idCook.setMaxAge(0);//삭제하기 위해 0 으로 설정 
+			response.addCookie(idCook);
+			
+			Cookie pwdCook=new Cookie("savedPwd", pwd);
+			pwdCook.setMaxAge(0);
+			response.addCookie(pwdCook);
+		}else{//체크 박스를 체크 했다면 
+			//아이디와 비밀번호를 쿠키에 저장
+			Cookie idCook=new Cookie("savedId", id);
+			idCook.setMaxAge(60*60*24);//하루동안 유지
+			response.addCookie(idCook);
+			
+			Cookie pwdCook=new Cookie("savedPwd", pwd);
+			pwdCook.setMaxAge(60*60*24);
+			response.addCookie(pwdCook);
+		}		
+		//view page 에서 필요한 데이터를 request 에 담고
+		request.setAttribute("encodedUrl", encodedUrl);
+		request.setAttribute("url", url);
+		request.setAttribute("isValid", isValid);
 	}
 	
 	

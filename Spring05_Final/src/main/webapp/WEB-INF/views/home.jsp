@@ -24,12 +24,12 @@
 	<h1>인덱스 페이지 입니다.</h1>
 	<ul>
 		<li><a href="users/signup_form.do">회원가입</a></li>
-		<li><a href="users/loginform.jsp">로그인</a></li>
-		<li><a href="cafe/list.jsp">카페 글 목록 보기</a></li>
-		<li><a href="file/list.jsp">자료실 목록 보기</a></li>
-		<li><a href="gallery/list.jsp">겔러리 목록 보기</a></li>
-		<li><a href="file/list2">자료실 목록보기(MVC 페턴)</a></li>
-		<li><a href="test/error_test.jsp">500 오류나는 페이지</a></li>
+		<li><a href="users/loginform.do">로그인</a></li>
+		<li><a href="cafe/list.do">카페 글 목록 보기</a></li>
+		<li><a href="file/list.do">자료실 목록 보기</a></li>
+		<li><a href="gallery/list.do">겔러리 목록 보기</a></li>
+		<li><a href="file/list2.do">자료실 목록보기(MVC 페턴)</a></li>
+		<li><a href="test/error_test.do">500 오류나는 페이지</a></li>
 	</ul>
 </div>
 </body>
