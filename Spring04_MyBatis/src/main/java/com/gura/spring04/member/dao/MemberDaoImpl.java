@@ -32,7 +32,8 @@ public class MemberDaoImpl implements MemberDao{ //구현 클래스
 		 * 3가지 정보 확인
 		 * Mapper.xml 문서의 namespace => member
 		 * sql 의 id => getList
-		 * parameterType => MemberDto
+		 * parameterType => 없음
+		 * resultType => MemberDto
 		 */
 		//.selectList() 를 호출했을 때 resultType 이 곧 List 의 Generic type 이 됩니다.
 		List<MemberDto> list=session.selectList("member.getList");//(namespace.id)
