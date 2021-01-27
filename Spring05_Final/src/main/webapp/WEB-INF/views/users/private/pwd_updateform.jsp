@@ -9,7 +9,7 @@
 <body>
 <div class="container">
 	<h1>비밀번호 수정 폼</h1>
-	<form action="pwd_update.jsp" method="post" id="myForm">
+	<form action="pwd_update.do" method="post" id="myForm">
 		<div>
 			<label for="pwd">기존 비밀번호</label>
 			<input type="password" name="pwd" id="pwd"/>

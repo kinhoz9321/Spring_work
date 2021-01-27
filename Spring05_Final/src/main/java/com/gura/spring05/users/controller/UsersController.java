@@ -28,6 +28,21 @@ public class UsersController {
 	@Autowired
 	private UsersDao dao;
 	
+	//비밀번호 수정 요청 처리
+	@RequestMapping("/users/private/pwd_update")
+	public ModelAndView pwd_update(ModelAndView mView, UsersDto dto, HttpSession session) {
+		//UsersDto 에는 폼 전송된 아이디, 구 비밀번호, 새 비밀번호가 담겨있다.
+		service.updateUserPwd(mView, dto, session);
+		mView.setViewName("users/private/pwd_update");
+		return mView;
+	}
+	
+	//비밀번호 수정 폼 요청 처리
+	@RequestMapping("/users/private/pwd_updateform")
+	public String pwd_updateform() {
+		return "users/private/pwd_updateform";
+	}
+	
 	//회원 탈퇴 요청 처리
 	@RequestMapping("/users/private/delete")
 	public String delete(HttpSession session) {

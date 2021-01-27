@@ -46,9 +46,13 @@ public class UsersDaoImpl implements UsersDao{
 	}
 
 	@Override
-	public void updatePwd(UsersDto dto) {
-		session.update("users.updatePwd", dto);
-		
+	public boolean updatePwd(UsersDto dto) {
+		int count=session.update("users.updatePwd", dto);
+		if(count==0) {
+			return false;
+		}else {
+			return true;
+		}
 	}
 
 	@Override
