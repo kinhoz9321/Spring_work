@@ -30,6 +30,14 @@ public class UsersController {
 	@Autowired
 	private UsersDao dao;
 	
+	//개인정보 수정 요청 처리
+	@RequestMapping(value = "/users/private/update", method = RequestMethod.POST)
+	public ModelAndView update(UsersDto dto, HttpSession session, ModelAndView mView) {//리턴 타입 ModelAndView, 인자 usersdto 에 요청 파라미터가 담겨서 들어옴
+		service.updateUser(dto, session);
+		mView.setViewName("users/private/update");
+		return mView;
+	}
+	
 	//개인정보 수정폼 요청 처리 (프로필 이미지 수정)
 	@RequestMapping("/users/private/updateform")
 	public ModelAndView updateform(ModelAndView mView, HttpSession session) {

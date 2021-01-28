@@ -26,4 +26,6 @@ public interface UsersService {
 	public void updateUserPwd(ModelAndView mView, UsersDto dto, HttpSession session);
 	//프로필 이미지를 upload 폴더에 저장하고 저장된 파일명을 DB 에 저장하는 메소드
 	public void saveProfileIamge(MultipartFile image, HttpServletRequest request);
+	//개인정보를 수정하는 메소드 (여기에서는 이메일주소만 수정가능)
+	public void updateUser(UsersDto dto, HttpSession session);
 }
