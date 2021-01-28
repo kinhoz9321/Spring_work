@@ -2,6 +2,8 @@ package com.gura.spring05.users.controller;
 
 import java.io.File;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -119,9 +122,10 @@ public class UsersController {
 		return "users/signup_form";
 	}
 	
-	//ajax 요청 처리
+	//ajax 요청 처리 (수정) json 응답하기 많이 쓰인다. 알아두기. 어렵다!
 	@RequestMapping("/users/checkid")
-	public ModelAndView checkid(@RequestParam String inputId, ModelAndView mView) {//@ReuquestParam 생략가능
+	@ResponseBody //Map<String, Object> key, value 뭐든 담을 수 있는 보통의 형식
+	public Map<String, Object> checkid(@RequestParam String inputId, ModelAndView mView) {//@ReuquestParam 생략가능
 		/*
 		 * (@ReuquestParam String inputId)
 		 * 는 
@@ -130,11 +134,10 @@ public class UsersController {
 		 */
 		//서비스를 이용해서 해당 아이디가 존재하는지 여부를 알아낸다.
 		boolean isExist=service.isExistId(inputId);
-		//ModelAndView 객체에 해당 정보를 담고 view page 로 forward 이동해서 응답
-		//ModelAndView 에 담는 것은 request 에 담는 것과 같다.
-		mView.addObject("isExist", isExist);
-		mView.setViewName("users/checkid");
-		return mView;
+		//{"isExist":true} or {"isExist":false} 를 응답하기 위한 Map 구성
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.putIfAbsent("isExist", isExist);
+		return map;
 	}
 
 	//회원 가입 요청처리
