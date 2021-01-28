@@ -1,5 +1,6 @@
 package com.gura.spring05.users.service;
 
+import java.io.File;
 import java.net.URLEncoder;
 
 import javax.servlet.http.Cookie;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.spring05.users.dao.UsersDao;
@@ -151,8 +153,44 @@ public class UsersServiceImpl implements UsersService{
 			//비밀번호가 수정되었으므로 다시 로그인 하도록 로그아웃 처리를 한다.
 			session.removeAttribute("id");
 		}
-		//성공 여부를 ModelAndView 객체에 담는다.
+		//성공 여부를 ModelAndView 객체에 담는다. request.setAttribute()
 		mView.addObject("isSuccess", isSuccess);
+		
+	}
+
+	@Override
+	public void saveProfileIamge(MultipartFile image, HttpServletRequest request) {
+		//원본 파일명
+		String orgFileName=image.getOriginalFilename();
+		
+		//파일을 저장할 실제 경로 "/webapp/upload/"
+		String realPath=request.getServletContext().getRealPath("/upload");
+		File f=new File(realPath);
+		if(!f.exists()) {//만일 존재하지 않으면
+			f.mkdir();//폴더를 만든다.
+		}
+		//저장할 파일명을 구성한다. 파일명 중복안되려고 currentTimemillis() 함.
+		String saveFileName=System.currentTimeMillis()+orgFileName;
+		//저장할 파일의 전체 경로를 구성한다. separator 운영체제의 구분을 위해 사용
+		String path=realPath+File.separator+saveFileName;
+		try {
+			File f2=new File(path);
+			//임시폴더에 업로드된 파일을 원하는 위치에 원하는 파일명으로 이동 시킨다. 임시폴더에 업로드 된 부분은 운영체제가 알아서 해준 것이라 소스코드에 없다. 운영체제가 알아서 해준 걸 myFile.transferTo(new File(path)); 통해서 다시 옮기는 것.
+			image.transferTo(f2);//전체 경로를 이용해서 파일객체 생성. 원하는 위치에 파일 객체를 생성. 특정파일에 access 할 수 있는 파일 객체
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		//DB 에 저장할 이미지의 경로
+		String profile="/upload/"+saveFileName;
+		//로그인된 아이디
+		String id=(String)request.getSession().getAttribute("id");
+		//위의 두 데이터를 DB에 업데이트 시켜준다.
+		//수정할 정보를 dto 에 담기
+		UsersDto dto=new UsersDto();
+		dto.setId(id);
+		dto.setProfile(profile);
+		//dao 를 이용해서 수정 반영하기
+		dao.updateProfile(dto);
 		
 	}
 

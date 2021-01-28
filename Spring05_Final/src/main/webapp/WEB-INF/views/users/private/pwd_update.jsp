@@ -10,7 +10,7 @@
 <body>
 <div class="container">
 	<c:choose>
-		<c:when test="${isSuccess }">
+		<c:when test="${isSuccess }"><!-- requestScope 생략 -->
 			<p>
 				비밀번호를 수정했습니다.
 				<a href="${pageContext.request.contextPath }/users/loginform.do">로그인 하러 가기</a>
