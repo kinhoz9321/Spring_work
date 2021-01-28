@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cafe">
-	
+	<insert id="insert" parameterType="cafeDto">
+		INSERT INTO board_cafe
+		(num, writer, title, content, viewCount, regdate)
+		VALUES (board_cafe_seq.NEXTVAL, #{writer}, #{title}, #{content}, 0, SYSDATE)
+	</insert>
+	<update id="update" parameterType="cafeDto">
+		UPDATE  board_cafe
+		SET title=#{title}, content=#{content}
+		WHERE num=#{num}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM board_cafe
+		WHERE num=#{num}
+	</delete>
+	<select id="getData" parameterType="int" resultType="cafeDto">
+		SELECT writer, title, content, viewCount, regdate
+		FROM board_cafe
+		WHERE num=#{num}
+	</select>
 </mapper>
