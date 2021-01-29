@@ -34,66 +34,75 @@
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach var="tmp" items="list">
+		<c:forEach var="tmp" items="${list }">
 			<tr>
-				<td>${tmp.num}</td>
-				<td>${tmp.writer}</td>
-				<td><a href="detail.jsp?num=${tmp.num}">${tmp.title}</a></td>
-				<td>${tmp.viewCount}</td>
-				<td>${tmp.regdate}</td>
+				<td>${tmp.num }</td>
+				<td>${tmp.writer }</td>
+				<td><a href="detail.do?num=${tmp.num }">${tmp.title }</a></td>
+				<td>${tmp.viewCount }</td>
+				<td>${tmp.regdate }</td>
 			</tr>
 		</c:forEach>
 		</tbody>
 	</table>
 	<nav>
 		<ul class="pagination justify-content-center">
-			<%if(startPageNum != 1){ %>
-				<li class="page-item">
-					<a class="page-link" href="list.jsp?pageNum=<%=startPageNum-1 %>&condition=<%=condition%>&keyword=<%=encodedK%>">Prev</a>
-				</li>
-			<%}else{ %>
-				<li class="page-item disabled">
-					<a class="page-link" href="javascript:">Prev</a>
-				</li>
-			<%} %>
-			<%for(int i=startPageNum; i<=endPageNum; i++) {%>
-				<%if(i==pageNum){ %>
-					<li class="page-item active">
-						<a class="page-link" href="list.jsp?pageNum=<%=i %>&condition=<%=condition%>&keyword=<%=encodedK%>"><%=i %></a>
-					</li>
-				<%}else{ %>
+			<c:choose>
+				<c:when test="${startPageNum != 1 }">
 					<li class="page-item">
-						<a class="page-link" href="list.jsp?pageNum=<%=i %>&condition=<%=condition%>&keyword=<%=encodedK%>"><%=i %></a>
+						<a class="page-link" href="list.jsp?pageNum=${startPageNum-1}&condition=${condition}&keyword=${encodedK}">Prev</a>
 					</li>
-				<%} %>
-			<%} %>
-			<%if(endPageNum < totalPageCount){ %>
-				<li class="page-item">
-					<a class="page-link" href="list.jsp?pageNum=<%=endPageNum+1 %>&condition=<%=condition%>&keyword=<%=encodedK%>">Next</a>
-				</li>
-			<%}else{ %>
-				<li class="page-item disabled">
-					<a class="page-link" href="javascript:">Next</a>
-				</li>
-			<%} %>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item disabled">
+						<a class="page-link" href="javascript:">Prev</a>
+					</li>
+				</c:otherwise>
+			</c:choose>
+			<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }" step="1">
+				<c:choose>
+					<c:when test="${i eq requestScope.pageNum }">
+						<li class="page-item active">
+							<a class="page-link" href="list.do?pageNum=${i}&condition=${condition}&keyword=${encodedK}">${i}</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item">
+							<a class="page-link" href="list.do?pageNum=${i}&condition=${condition}&keyword=${encodedK}">${i}</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<c:choose>
+				<c:when test="${endPageNum lt totalPageCount }">
+					<li class="page-item">
+						<a class="page-link" href="list.do?pageNum=${endPageNum+1}&condition=${condition}&keyword=${encodedK}">Next</a>
+					</li>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item disabled">
+						<a class="page-link" href="javascript:">Next</a>
+					</li>
+				</c:otherwise>
+			</c:choose>
 		</ul>
 	</nav>
-	<form action="list.jsp" method="get">
-		<label for="condition">검색조건</label>
+	<form action="list.do" method="get">
+		<label for="condition">검색조건</label> ${condition eq 'title' ? 'selected' : '' }
 		<select name="condition" id="condition">
-			<option value="title_content" <%=condition.equals("title_content") ? "selected" : "" %>>제목+내용</option>
-			<option value="title" <%=condition.equals("title") ? "selected" : "" %>>제목</option>
-			<option value="writer" <%=condition.equals("writer") ? "selected" : "" %>>작성자</option>
+			<option value="title_content" ${condition eq 'title_content' ? 'selected' : '' }>제목+내용</option>
+			<option value="title" ${condition eq 'title' ? 'selected' : '' }>제목</option>
+			<option value="writer" ${condition eq 'writer' ? 'selected' : '' }>작성자</option>
 		</select>
-		<input type="text" name="keyword" placeholder="검색어..." value="<%=keyword%>"/>
+		<input type="text" name="keyword" placeholder="검색어..." value="${keyword }"/>
 		<button type="submit">검색</button>
 	</form>
 	<%-- 만일 검색 키워드가 존재한다면 몇개의 글이 검색 되었는지 알려준다. --%>
-	<%if(!keyword.equals("")){ %>
+	<c:if test="${not empty keyword }">
 		<div class="alert alert-success">
-			<strong><%=totalRow %></strong> 개의 자료가 검색되었습니다.
+			<strong>${totalRow }</strong> 개의 자료가 검색되었습니다.
 		</div>
-	<%} %>
+	</c:if>
 </div>
 </body>
 </html>
