@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.spring05.cafe.dto.CafeDto;
@@ -18,6 +19,15 @@ public class CafeController {
 	//의존객체 DI
 	@Autowired
 	private CafeService service;
+	
+	@RequestMapping("/cafe/detail")
+	public ModelAndView detail(@RequestParam int num, ModelAndView mView) {
+		//자세히 보여줄 글 번호가 파라미터로 넘어온다.
+		service.getDetail(num, mView);
+		//view page 로 forward 이동해서 응답
+		mView.setViewName("cafe/detail");
+		return mView;
+	}
 	
 	//글 목록 요청처리
 	@RequestMapping("/cafe/list")

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cafe">
+	<update id="addViewCount" parameterType="int">
+		UPDATE board_cafe
+		SET viewCount=viewCount+1
+		WHERE num=#{num}
+	</update>
 	<select id="getCount" parameterType="cafeDto" resultType="int">
 		SELECT NVL(MAX(ROWNUM), 0)
 		FROM board_cafe
