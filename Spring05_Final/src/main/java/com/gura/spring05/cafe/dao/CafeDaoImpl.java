@@ -43,8 +43,26 @@ public class CafeDaoImpl implements CafeDao{
 
 	@Override
 	public List<CafeDto> getList(CafeDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+		/*
+		 * parameterType => CafeDto
+		 * 
+		 * parameterType 에는 페이징 처리를 위한 startRowNum 과 endRowNum 이 들어있고
+		 * 
+		 * ***
+		 * title 검색이면 title 필드에 검색 키워드가 들어있다.
+		 * writer 검색이면 writer 필드에 검색 키워드가 들어있다.
+		 * title+content 검색이면 title and content 필드에 검색 키워드가 들어있다.
+		 * 검색 키워드가 없으면 title, writer, content 필드는 모두 null 이다. 
+		 * ***
+		 * 
+		 * resultType => CafeDto * selectList 일 때 제네릭이 resultType 이 된다. *
+		 * 리턴 타입은 list 가 된다.
+		 * row 한개를 담는 타입 정하는게 resultType
+		 * 
+		 * getList 하나만 만들어두고 모든 것에 다 맞춰 동작하게 하겠다.
+		 */
+		List<CafeDto> list=session.selectList("cafe.getList", dto);
+		return list;
 	}
 
 	@Override
@@ -55,8 +73,14 @@ public class CafeDaoImpl implements CafeDao{
 
 	@Override
 	public int getCount(CafeDto dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		/*
+		 * parameterType => cafeDto
+		 * parameterType 에는 검색 키워드가 존재한다면 들어있다.
+		 * 
+		 *  resultType => int 
+		 */
+		int count = session.selectOne("cafe.getCount", dto);
+		return count;
 	}
 
 }
