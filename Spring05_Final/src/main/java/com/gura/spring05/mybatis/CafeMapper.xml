@@ -58,7 +58,7 @@
 		WHERE num=#{num}
 	</delete>
 	<select id="getData" parameterType="int" resultType="cafeDto">
-		SELECT writer, title, content, viewCount, regdate
+		SELECT num, writer, title, content, viewCount, regdate
 		FROM board_cafe
 		WHERE num=#{num}
 	</select>

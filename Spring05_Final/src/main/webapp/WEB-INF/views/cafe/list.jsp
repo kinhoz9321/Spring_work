@@ -21,7 +21,7 @@
 			<li class="breadcrumb-item active">글목록</li>
 		</ul>
 	</nav>
-	<a href="private/insertform.jsp">새글 작성</a>
+	<a href="private/insertform.do">새글 작성</a>
 	<h1>카페 글 목록 입니다.</h1>
 	<table class="table table-striped">
 		<thead class="thead-dark">

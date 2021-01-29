@@ -136,4 +136,16 @@ public class CafeServiceImpl implements CafeService{
 		cafeDao.addViewCount(num);
 	}
 
+	@Override
+	public void updateContent(CafeDto dto) {
+		cafeDao.update(dto);
+		
+	}
+
+	@Override
+	public void deleteContent(int num) {
+		cafeDao.delete(num);
+		
+	}
+
 }
