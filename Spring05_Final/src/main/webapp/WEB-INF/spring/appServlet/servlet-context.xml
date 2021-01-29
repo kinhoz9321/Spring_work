@@ -72,7 +72,7 @@
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="prefix" value="/WEB-INF/views/" /><!-- 이설정을통해서view페이지의 위치를 바꿀 수 있다. -->
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	

@@ -38,7 +38,7 @@ public class MemberController {
 	}
 	//회원 추가 요청처리
 	@RequestMapping("/member/insert")
-	public ModelAndView insert(@ModelAttribute MemberDto dto,
+	public ModelAndView insert(@ModelAttribute("dto") MemberDto dto,
 			ModelAndView mView) {
 		//MemberService 객체를 이용해서 회원정보를 추가한다.
 		service.addMember(dto);
