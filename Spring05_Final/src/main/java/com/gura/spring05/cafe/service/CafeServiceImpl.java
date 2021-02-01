@@ -206,4 +206,10 @@ public class CafeServiceImpl implements CafeService{
 		
 	}
 
+	@Override
+	public void updateComment(CafeCommentDto dto) {
+		cafeCommentDao.update(dto);
+		
+	}
+
 }
