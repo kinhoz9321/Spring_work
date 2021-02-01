@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="CafeComment">
+<mapper namespace="cafeComment">
 	<select id="getList" parameterType="int" resultType="cafeCommentDto"><!-- 원글의 글번호 int -->
 		SELECT num, writer, content, target_id, ref_group, comment_group, deleted, board_cafe_comment.regdate, profile
 		FROM board_cafe_comment
