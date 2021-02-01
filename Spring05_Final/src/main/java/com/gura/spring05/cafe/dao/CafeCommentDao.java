@@ -15,4 +15,6 @@ public interface CafeCommentDao {
 	public void delete(int num);
 	//댓글의 시퀀스값(글번호) 를 리턴하는 메소드
 	public int getSequence();
+	//댓글 하나의 정보를 리턴하는 메소드
+	public CafeCommentDto getData(int num);
 }
