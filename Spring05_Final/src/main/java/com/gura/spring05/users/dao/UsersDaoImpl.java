@@ -9,7 +9,7 @@ import com.gura.spring05.users.dto.UsersDto;
 @Repository
 public class UsersDaoImpl implements UsersDao{
 	
-	//핵심 의존 객체(DI)
+	//핵심 의존 객체(DI) servlet-context.xml 위치
 	@Autowired
 	private SqlSession session;
 
