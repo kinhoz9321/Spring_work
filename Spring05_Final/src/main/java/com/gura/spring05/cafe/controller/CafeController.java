@@ -25,6 +25,14 @@ public class CafeController {
 	//의존객체 DI
 	@Autowired
 	private CafeService service;
+
+	@RequestMapping("/cafe/ajax_comment_list")
+	public ModelAndView ajaxCommentList(HttpServletRequest request,
+			ModelAndView mView) {
+		service.moreCommentList(request);
+		mView.setViewName("cafe/ajax_comment_list");
+		return mView;
+	}
 	
 	//댓글 수정 ajax 요청에 대한 요청 처리
 	@RequestMapping(value = "/cafe/private/comment_update",  method = RequestMethod.POST)

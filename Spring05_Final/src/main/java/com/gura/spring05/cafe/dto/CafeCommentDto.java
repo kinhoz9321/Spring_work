@@ -11,13 +11,14 @@ public class CafeCommentDto {
 	private String deleted;//삭제된 댓글인지 여부 'yes' or 'no'
 	private String regdate;
 	private String profile;//프로필 이미지 경로
+	private int startRowNum;
+	private int endRowNum;
 	
 	//디폴트 생성자
 	public CafeCommentDto() {}
-	
-	//생성자
+
 	public CafeCommentDto(int num, String writer, String content, String target_id, int ref_group, int comment_group,
-			String deleted, String regdate, String profile) {
+			String deleted, String regdate, String profile, int startRowNum, int endRowNum) {
 		super();
 		this.num = num;
 		this.writer = writer;
@@ -28,9 +29,10 @@ public class CafeCommentDto {
 		this.deleted = deleted;
 		this.regdate = regdate;
 		this.profile = profile;
+		this.startRowNum = startRowNum;
+		this.endRowNum = endRowNum;
 	}
 
-	//getter setter
 	public int getNum() {
 		return num;
 	}
@@ -102,5 +104,22 @@ public class CafeCommentDto {
 	public void setProfile(String profile) {
 		this.profile = profile;
 	}
+
+	public int getStartRowNum() {
+		return startRowNum;
+	}
+
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
+	}
+
+	public int getEndRowNum() {
+		return endRowNum;
+	}
+
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
+	}
+	
 	
 }
