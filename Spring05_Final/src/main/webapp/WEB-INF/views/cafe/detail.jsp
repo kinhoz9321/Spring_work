@@ -224,8 +224,8 @@
 </div>
 <script src="${pageContext.request.contextPath }/resources/js/jquery.form.min.js"></script>
 <script>
-	//댓글 수정 링크를 눌렀을때 호출되는 함수 등록
-	$(document).on("click",".comment-update-link", function(){
+	//댓글 수정 링크를 눌렀을때 호출되는 함수 등록 document 는 위에 로딩한 문서
+	$(document).on("click",".comment-update-link", function(){//이벤트명, 선택자, 함수
 		/*
 			click 이벤트가 일어난 댓글 수정 링크에 저장된 data-num 속성의 값을 
 			읽어와서 id 선택자를 구성한다.
@@ -239,8 +239,8 @@
 	//로딩한 jquery.form.min.js jquery플러그인의 기능을 이용해서 댓글 수정폼을 
 	//ajax 요청을 통해 전송하고 응답받기
 	$(document).on("submit", ".update-form", function(){
-		//이벤트가 일어난 폼을 ajax로 전송되도록 하고 
-		$(this).ajaxSubmit(function(data){
+		//이벤트가 일어난 폼을 ajax로 전송되도록 하고 (submit 이벤트가 일어났을 때 강제로 ajax로 제출을 해라 ajaxsubmit)
+		$(this).ajaxSubmit(function(data){//결과는 data로 간다.
 			//console.log(data);
 			//수정이 일어난 댓글의 li 요소를 선택해서 원하는 작업을 한다.
 			var selector="#comment"+data.num; //"#comment6" 형식의 선택자 구성
@@ -264,7 +264,7 @@
 		}
 	});
 	//답글 달기 링크를 클릭했을때 실행할 함수 등록
-	$(document).on("click",".reply-link", function(){
+	$(document).on("click",".reply-link", function(){//이벤트명, 선택자, 함수
 		//로그인 여부
 		var isLogin=${not empty id};
 		if(isLogin == false){
@@ -284,7 +284,7 @@
 			$(this).text("답글");//답들로 바꾼다.
 		}	
 	});
-	$(document).on("submit",".insert-form", function(){
+	$(document).on("submit",".insert-form", function(){//동적으로 li요소를 추가하려고 하기 때문에 이렇게 ajax를 바꿔줌
 		//로그인 여부
 		var isLogin=${not empty id};
 		if(isLogin == false){
@@ -304,13 +304,12 @@
 	//페이지가 처음 로딩될때 1page 를 보여준다고 가정
 	var currentPage=1;
 	//전체 페이지의 수를 javascript 변수에 담아준다.
-	var totalPageCount=${totalPageCount};
+	var totalPageCount=${totalPageCount};//jsp 가 출력해준다. 전체가 20페이지가 있으면 20페이지가 출력되도록.
+	//현재 로딩중인지 여부
+	var isLoading=false;
 	
 	//웹브라우저에 scoll 이벤트가 일어 났을때 실행할 함수 등록 
 	$(window).on("scroll", function(){
-		if(currentPage == totalPageCount){//만일 마지막 페이지 이면 
-			return; //함수를 여기서 종료한다. 
-		}
 		//위쪽으로 스크롤된 길이 구하기
 		var scrollTop=$(window).scrollTop();
 		//window 의 높이
@@ -320,21 +319,28 @@
 		//바닥까지 스크롤 되었는지 여부
 		var isBottom = scrollTop+windowHeight + 10 >= documentHeight;
 		if(isBottom){//만일 바닥까지 스크롤 했다면...
+			if(currentPage == totalPageCount || isLoading){//만일 마지막 페이지 이면 
+				return; //함수를 여기서 종료한다. 
+			}
+			//현재 로딩 중이라고 표시한다. 
+			isLoading=true;
 			//로딩 이미지 띄우기
 			$(".loader").show();
 			
 			currentPage++; //페이지를 1 증가 시키고 
-			//해당 페이지의 내용을 ajax  요청을 해서 받아온다. 
+			//해당 페이지의 내용을 ajax  요청을 해서 받아온다. 함수로 받아짐. 
 			$.ajax({
 				url:"ajax_comment_list.do",
 				method:"get",
 				data:{pageNum:currentPage, ref_group:${dto.num}},
-				success:function(data){
+				success:function(data){ //li, dl, dt, dd (a, form 동적으로 추가)
 					console.log(data);
 					//data 가 html 마크업 형태의 문자열 
 					$(".comments ul").append(data);
 					//로딩 이미지를 숨긴다. 
 					$(".loader").hide();
+					//로딩중이 아니라고 표시한다.
+					isLoading=false;
 				}
 			});
 		}
@@ -343,3 +349,7 @@
 </script>
 </body>
 </html>
+<%--
+갤러리에서 isLoding 이라는 값을 썼었다.
+갤러리랑 비슷한 로딩시스템.
+--%>

@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
-<c:forEach var="tmp" items="${commentList }">
+<c:forEach var="tmp" items="${commentList }"><%--댓글목록을 이용 --%>
 	<c:choose>
 		<c:when test="${tmp.deleted eq 'yes' }">
-			<li>삭제된 댓글 입니다.</li>
+			<li>삭제된 댓글 입니다.</li><%-- li만 출력 --%>
 		</c:when>
 		<c:otherwise>
 			<li id="comment${tmp.num }" <c:if test="${tmp.num ne tmp.comment_group }">style="padding-left:50px;"</c:if>>
