@@ -141,6 +141,7 @@ public class CafeServiceImpl implements CafeService{
 		cafeDao.addViewCount(num);
 		//원글의 글번호를 이용해서 댓글 목록을 얻어온다.
 		List<CafeCommentDto> commentList=cafeCommentDao.getList(num);
+		//ModelAndView객체를 통해 댓글 목록을 담아준다.
 		mView.addObject("commentList", commentList);
 	}
 
@@ -166,7 +167,7 @@ public class CafeServiceImpl implements CafeService{
 		String content=request.getParameter("content");
 		/*
 		 * 원글의 댓글은 comment_group 번호가 전송 안되고
-		 * 댓글의 댓글은 comment_group 번호가 전송이 된다.
+		 * 댓글의 댓글은 comment_group 번호가 전송이 된다. ***
 		 * 따라서 null 여부를 조사하면 원글의 댓글인지 댓글의 댓글인지 판별할 수 있다.
 		 */
 		String comment_group=request.getParameter("comment_group");

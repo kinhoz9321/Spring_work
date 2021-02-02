@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%> 
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+    pageEncoding="UTF-8"%>   
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>/cafe/detail.jsp</title>
-<jsp:include page="../include/resource.jsp"></jsp:include>
 <style>
 	/* 프로필 이미지를 작은 원형으로 만든다 */
 	#profileImage{
@@ -31,7 +30,7 @@
 		.comment-insert-form textarea, .comment-insert-form button,
 		.comment-update-form textarea, .comment-update-form button{
 		float: left;
-	}
+	}	
 	.comments li{
 		clear: left;
 	}
@@ -61,7 +60,7 @@
 		top: 1em;
 		left: 1em;
 		color: red;
-	}	
+	}
 	pre {
 	  display: block;
 	  padding: 9.5px;
@@ -78,8 +77,9 @@
 	/* 글 내용중에 이미지가 있으면 최대 폭을 100%로 제한하기 */
 	.contents img{
 		max-width: 100%;
-	}	
+	}		
 </style>
+<jsp:include page="../include/resource.jsp"></jsp:include>
 </head>
 <body>
 <jsp:include page="../include/navbar.jsp">
@@ -100,53 +100,58 @@
 	<table class="table table-bordered">
 		<tr>
 			<th>글번호</th>
-			<td>${dto.num }</td>
+			<td>${dto.num}</td>
 		</tr>
 		<tr>
 			<th>작성자</th>
-			<td>${dto.writer }</td>
+			<td>${dto.writer}</td>
 		</tr>
 		<tr>
 			<th>제목</th>
-			<td>${dto.title }</td>
+			<td>${dto.title}</td>
 		</tr>
 		<tr>
 			<th>조회수</th>
-			<td>${dto.viewCount }</td>
+			<td>${dto.viewCount}</td>
 		</tr>
 		<tr>
 			<th>등록일</th>
-			<td>${dto.regdate }</td>
+			<td>${dto.regdate}</td>
 		</tr>
 		<tr>
 			<td colspan="2">
-				<div>${dto.content }</div>
+				<div>${dto.content}</div>
 			</td>
 		</tr>
 	</table>
 	<ul>
 		<li><a href="list.do">목록보기</a></li>
-		<c:if test="${dto.writer eq id }">
+		<c:if test="${requestScope.dto.writer eq sessionScope.id }">
 			<li><a href="private/updateform.do?num=${dto.num }">수정</a></li>
 			<li><a href="javascript:deleteConfirm()">삭제</a></li>
 		</c:if>
 	</ul>
 	<!-- 댓글 목록 -->
 	<div class="comments">
-		<ul>
+		<ul><!-- tmp 의 타입 = CafeCommentDto -->
 			<c:forEach var="tmp" items="${commentList }">
-				<c:choose>
+			<c:choose>
 					<c:when test="${tmp.deleted eq 'yes' }">
-						<li>삭제된 댓글 입니다.</li>
+						<li>삭제된 댓글 입니다.</li><!-- 삭제된 댓글이라면 출력 -->
 					</c:when>
+					<!--
+					comment${tmp.num } id 부여 jquery 에서 li를 좀 더 편하게 선택할 수 있게. 댓글의 번호가 id 가 된다.
+					<c:if test="${tmp.num ne tmp.comment_group }"> 댓글의 글번호가 댓글의 그룹번호하고 다르면 들여쓰기를 하겠다는 조건 style="padding-left:50px;" inline stylesheet 를 조건부로 사용
+					-->
 					<c:otherwise>
 						<li id="comment${tmp.num }" <c:if test="${tmp.num ne tmp.comment_group }">style="padding-left:50px;"</c:if>>
 							<c:if test="${tmp.num ne tmp.comment_group }"><svg class="reply_icon" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-return-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+		  						<!-- 대댓글 빨간 화살표 svg 이미지 -->
 		  						<path fill-rule="evenodd" d="M10.146 5.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 9l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
 		  						<path fill-rule="evenodd" d="M3 2.5a.5.5 0 0 0-.5.5v4A2.5 2.5 0 0 0 5 9.5h8.5a.5.5 0 0 0 0-1H5A1.5 1.5 0 0 1 3.5 7V3a.5.5 0 0 0-.5-.5z"/></svg>
 							</c:if>
-							<dl>
-								<dt>
+							<dl><!-- li 안에 (정의형목록) 제목 dl , 내용 dt, dd 구조 만들어서 출력 -->
+								<dt><!-- 댓글 윗부분 프로필 이미지, 누가 누구에게 썼는지, 시간, 답글수정삭제 출력 -->
 									<c:choose>
 										<c:when test="${empty tmp.profile }">
 											<svg id="profileImage"  width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -159,20 +164,21 @@
 										</c:otherwise>
 									</c:choose>
 									<span>${tmp.writer }</span>
-									<c:if test="${tmp.num ne tmp.comment_group }">
-										@<strong>${tmp.target_id }</strong>
+									<c:if test="${tmp.num ne tmp.comment_group }"><!-- 댓글의 글번호가 그룹댓글번호와 다를 때 , 원글에 댓글은 원글작성자에게 쓴 것이기 때문에 target_id 설정할 필요 없음. -->
+										@<strong>${tmp.target_id }</strong><!-- 조건부로 누구에게 작성하는건지 출력 -->
 									</c:if>
 									<span>${tmp.regdate }</span>
 									<a href="javascript:" class="reply_link">답글</a>
-									<c:if test="${tmp.writer eq id }">
+									<c:if test="${tmp.writer eq sessionScope.id }"><!-- 댓글의 작성자가 로그인된 아이디와 같으면 수정 삭제 기능 제공 -->
 										| <a href="javascript:" class="comment-update-link">수정</a>
 										| <a href="javascript:deleteComment(${tmp.num })">삭제</a>
 									</c:if>
 								</dt>
-								<dd>
+								<dd><!-- 댓글내용출력 -->
 									<pre>${tmp.content }</pre>
 								</dd>
 							</dl>
+							<!-- 댓글의 댓글을 출력하는 폼 (li안에 폼도 넣을 수 있다.) 폼은 css로 숨기고, hidden 은 눈에 보이지는 않지만 댓글을 등록할 때 같이 값이 날아가도록 하는 것. 다만 보이지 않을 뿐이다. -->
 							<form class="comment-insert-form" 
 								action="private/comment_insert.do" method="post">
 								<input type="hidden" name="ref_group"
@@ -185,21 +191,21 @@
 								<button type="submit">등록</button>
 							</form>
 							<!-- 로그인된 아이디와 댓글의 작성자가 같으면 수정 폼 출력 -->
-							<c:if test="${tmp.writer eq id }">
+							<c:if test="${tmp.writer eq id }"><!-- 조건부 -->
 								<form class="comment-update-form" 
 									action="private/comment_update.do" method="post">
 									<input type="hidden" name="num" value="${tmp.num }"/>
-									<textarea name="content">${tmp.content }</textarea>
+									<textarea name="content">${tmp.content }</textarea><!-- 기존내용출력, 쉽게 수정하기 위해 -->
 									<button type="submit">수정</button>
 								</form>
-							</c:if>
+							</c:if>							
 						</li>						
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 		</ul>
 	</div>
-	<!-- 원글에 댓글을 다는 폼 -->
+	<!-- 원글에 댓글을 다는 폼  name="comment_group" 이 없다.-->
 	<div class="comment_form">
 		<form action="private/comment_insert.do" method="post">
 			<!-- 원글의 글번호가 ref_group  번호가 된다. -->
@@ -219,17 +225,17 @@
 		.find(".comment-update-form")
 		.slideToggle();
 	});
-	//로딩한 jquery.form.min.js jquery플러그인의 기능을 이용해서 댓글 수정폼을 
+	//"로딩한 jquery.form.min.js jquery플러그인의 기능을 이용"해서 댓글 수정폼을 
 	//ajax 요청을 통해 전송하고 응답받기
 	$(".comment-update-form").ajaxForm(function(data){
 		console.log(data);
 		//수정이 일어난 댓글의 li 요소를 선택해서 원하는 작업을 한다.
-		var selector="#comment"+data.num; //"#comment6" 형식의 선택자 구성
+		var selector="#comment"+data.num; //"#comment6" 형식의 선택자 구성 이부분 중요
 		
 		//댓글 수정 폼을 안보이게 한다. 
 		$(selector).find(".comment-update-form").slideUp();
 		//pre 요소에 출력된 내용 수정하기
-		$(selector).find("pre").text(data.content);
+		$(selector).find("pre").text(data.content);	//응답되는 컨텐츠이용	
 	});
 	function deleteComment(num){
 		var isDelete=confirm("댓글을 삭제 하시겠습니까?");
@@ -247,9 +253,9 @@
 			location.href="${pageContext.request.contextPath }/users/loginform.do?"+
 					"url=${pageContext.request.contextPath }/cafe/detail.do?num=${dto.num}";
 		}
-		
-		$(this).parent().parent().parent().find(".comment-insert-form")
-		.slideToggle()
+		//$(this)는 $(".reply_link")
+		$(this).parent().parent().parent().find(".comment-insert-form")//li 이벤트가 일어난 li를 찾기 위해서 이렇게 찾는다.
+		.slideToggle()//()안에 숫자로 toggle 속도 조절 1은 슬라이드가 없음 slideup, down 반복
 		if($(this).text()=="답글"){//링크 text를 답글일때 클릭하면 
 			$(this).text("취소");//취소로 바꾸고 
 		}else{//취소일때 크릭하면 
@@ -275,3 +281,14 @@
 </script>
 </body>
 </html>
+<!-- 
+c:choose 안에 c:otherwise
+comment${tmp.num } id 부여 jquery 에서 li를 좀 더 편하게 선택할 수 있게. 댓글의 번호가 id 가 된다. <c:if test="${tmp.num ne tmp.comment_group }"> 댓글의 글번호가 댓글의 그룹번호하고 다르면 들여쓰기를 하겠다는 조건 style="padding-left:50px;" inline stylesheet 를 조건부로 사용
+ -->
+
+
+
+
+
+
+
