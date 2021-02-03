@@ -74,18 +74,20 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" /><!-- 이설정을통해서view페이지의 위치를 바꿀 수 있다. -->
 		<beans:property name="suffix" value=".jsp" />
-		<beans:property name="order" value="1"/>
+		<beans:property name="order" value="1"/><!-- 0순위가 없으면 /WEB-INF/views/ 여기서 찾겠다. -->
 	</beans:bean>
 	
 	<context:component-scan base-package="com.gura.spring05" />
 
 	<!-- 
-		bean 의 이름을 이용해서 view 로 이동할수 있도록 설정 
+		bean 의 이름을 이용해서 view 로 이동할수 있도록 설정 BeanNameViewResolver
 		setOrder(0) 는 0 순위로 찾아 가겠다는 의미 
 		0 순위로 찾아서 없으면 
 		views 폴더 안에서 jsp 페이지를 찾게 된다. 	
+		order 0 0순위로 찾겠다. (빈의 이름을)
+		file/private/upload 이것도 0순위로 찾으나 없으니 views에서 1순위로 다시 찾는다. ***이해하기
 	-->
 	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
-		<beans:property name="order" value="0"/>
+		<beans:property name="order" value="0"/> 
 	</beans:bean>	
 </beans:beans>

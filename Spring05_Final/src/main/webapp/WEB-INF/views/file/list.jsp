@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>    
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%-- fmt formating --%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,7 +36,7 @@
 				<td>${tmp.writer }</td>
 				<td>${tmp.title }</td>
 				<td><a href="download.do?num=${tmp.num }">${tmp.orgFileName }</a></td>
-				<td><fmt:formatNumber value="${tmp.fileSize }" pattern="#,###"/> byte</td>
+				<td><fmt:formatNumber value="${tmp.fileSize }" pattern="#,###"/> byte</td><%-- pattern 3자리마다 컴마찍게하기 --%>
 				<td>${tmp.regdate }</td>
 				<td>
 					<c:if test="${tmp.writer eq id }">

@@ -98,7 +98,7 @@ public class FileServiceImpl implements FileService{
 
 	@Override
 	public void saveFile(FileDto dto, ModelAndView mView, HttpServletRequest request) {
-		//업로드된 파일의 정보를 가지고 있는 MultipartFile 객체의 참조값 얻어오기 
+		//업로드된 파일의 정보를 가지고 있는 MultipartFile 객체의 참조값 얻어오기 (추출)
 		MultipartFile myFile=dto.getMyFile();
 		//원본 파일명
 		String orgFileName=myFile.getOriginalFilename();
@@ -124,16 +124,16 @@ public class FileServiceImpl implements FileService{
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		//dto 에 업로드된 파일의 정보를 담는다.
+		//dto 에 업로드된 파일의 정보를 담는다. (구성)
 		String id=(String)request.getSession().getAttribute("id");
 		dto.setWriter(id); //세션에서 읽어낸 파일 업로더의 아이디 
 		dto.setOrgFileName(orgFileName);
 		dto.setSaveFileName(saveFileName);
 		dto.setFileSize(fileSize);
-		//fileDao 를 이용해서 DB 에 저장하기
+		//fileDao 를 이용해서 DB 에 저장하기 (담기)
 		fileDao.insert(dto);
 		//view 페이지에서 사용할 모델 담기 
-		mView.addObject("dto", dto);
+		mView.addObject("dto", dto); //upload.jsp 에 정보를 출력해주려고 ModelAndView에 담음
 		
 	}
 
@@ -142,7 +142,8 @@ public class FileServiceImpl implements FileService{
 		//fileDao 를 이용해서 파일 정보를 얻어온 다음
 		FileDto dto=fileDao.getData(num);
 		//mView 객체에 담는다.
-		mView.addObject("dto", dto);
+		mView.addObject("dto", dto); //filedownview에서 어떻게 사용하는지 그림 참고
+		//filedto = type, dto = key
 		
 	}
 

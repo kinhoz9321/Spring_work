@@ -26,6 +26,7 @@
 		</div>
 		<div class="form-group">
 			<label for="myFile">첨부 파일</label>
+			<%-- name="myFile" 이것 때문에 dto 필드 이름을 myFile 로 지은 것 --%>
 			<input class="form-control" type="file" name="myFile" id="myFile"/>
 		</div>
 		<button class="btn btn-outline-primary"  type="submit">업로드</button>

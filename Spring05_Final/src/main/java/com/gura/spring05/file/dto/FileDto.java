@@ -13,7 +13,7 @@ public class FileDto {
 	//페이징 처리를 하기 위한 필드
 	private int startRowNum;
 	private int endRowNum;
-	//업로드 되는 파일의 정보를 담을 필드
+	//업로드 되는 파일의 정보를 담을 필드 *** input type name 과 똑같이 선언
 	private MultipartFile myFile;
 	
 	public FileDto() {}

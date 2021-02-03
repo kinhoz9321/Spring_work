@@ -37,6 +37,7 @@ public class FileController {
 	//파일 업로드 요청 처리 
 	@RequestMapping(value = "/file/private/upload", 
 			method = RequestMethod.POST)
+	//title, myFile dto 에 담김 타입은 multipartFile type 업로드된 정보가 들어있는 것
 	public ModelAndView upload(FileDto dto, ModelAndView mView, 
 			HttpServletRequest request) {
 		fileservice.saveFile(dto, mView, request);
@@ -51,8 +52,8 @@ public class FileController {
 		//mView 에 다운로드 할 파일의 정보를 담고 
 		fileservice.getFileData(num, mView);
 		//view 페이지로 이동해서 다운로드 시켜준다. 
-		// @Component("fileDownView") 가 붙어있는 AbstractView 객체를 찾아간다. 
-		mView.setViewName("fileDownView");
+		// @Component("fileDownView") 가 붙어있는 AbstractView 객체를 찾아간다. ***
+		mView.setViewName("fileDownView");//@Component("bean 의 이름 지정") 
 		return mView;
 	}
 	
