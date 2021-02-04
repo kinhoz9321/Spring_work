@@ -9,7 +9,7 @@
 <jsp:include page="../include/resource.jsp"></jsp:include>
 <!-- 
 	jquery 플러그인 imgLiquid.js 로딩하기
-	- 반드시 jquery.js 가 먼저 로딩이 되어 있어야지만 동작한다.
+	- 반드시 jquery.js 가 먼저 로딩이 되어 있어야지만 동작한다. ***
 	- 사용법은 이미지의 부모 div 크기를 결정하고 이미지를 선택해서  .imgLiquid() 동작을 하면된다.
  -->
 <script src="${pageContext.request.contextPath }/resources/js/imgLiquid.js"></script>
@@ -73,16 +73,16 @@
 	<jsp:param value="gallery" name="thisPage"/>
 </jsp:include>
 <div class="container">
-	<a href="private/upload_form.do">사진 업로드 하러 가기</a><br/>
+	<a href="private/upload_form.do">사진 업로드 하러 가기</a><br/><%-- .do 사용 --%>
 	<a href="private/ajax_form.do">사진 업로드 하러 가기2</a>
 	<h1>겔러리 목록 입니다.</h1>
 	<div class="row" id="galleryList">
-		<c:forEach var="tmp" items="${list }">
+		<c:forEach var="tmp" items="${requestScope.list }"><%-- 모델앤뷰에 담긴 내용 list 사용 tmp = GalleryDto Dto는 필드명이 중요하다. 필드명 인식 중요! --%>
 			<div class="col-6 col-md-4 col-lg-3">
 				<div class="card mb-3">
-					<a href="detail.do?num=${tmp.num }">
+					<a href="detail.do?num=${tmp.num }"><%-- tmp.num dto 의 getter 메소드가 호출되는 것 필드명을 똑같이 적을 것 핵심 --%>
 						<div class="img-wrapper">
-							<img class="card-img-top" src="${pageContext.request.contextPath }${tmp.imagePath}" />
+							<img class="card-img-top" src="${pageContext.request.contextPath }${tmp.imagePath}" /><%-- 웹브라우저가 이미지를 받아오기 위해서 이 경로로 요청하는 것 '요청' 우리가 정확한 경로 구성 --%>
 						</div>
 					</a>
 					<div class="card-body">
@@ -96,7 +96,7 @@
 	</div>
 </div>
 <div class="back-drop">
-	<img src="${pageContext.request.contextPath }/svg/spinner-solid.svg"/>
+	<img src="${pageContext.request.contextPath }/svg/spinner-solid.svg"/><%-- web-app 폴더에 svg 폴더 가져다 놓음 svg 이미지는 벡터로 구성이 되어있기 때문에 안깨진다. --%>
 </div>
 <script>
 	// card 이미지의 부모 요소를 선택해서 imgLiquid  동작(jquery plugin 동작) 하기 

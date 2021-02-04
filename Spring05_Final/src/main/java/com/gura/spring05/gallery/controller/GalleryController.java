@@ -25,7 +25,7 @@ public class GalleryController {
 	
 	@RequestMapping("/gallery/list")
 	public ModelAndView list(ModelAndView mView, HttpServletRequest request) {
-		service.getList(mView, request);
+		service.getList(mView, request);//모델앤뷰로 뷰페이지에 필요한 값이 담기도록 했다. 객체의 참조값 전달.
 		mView.setViewName("gallery/list");
 		return mView;
 	}

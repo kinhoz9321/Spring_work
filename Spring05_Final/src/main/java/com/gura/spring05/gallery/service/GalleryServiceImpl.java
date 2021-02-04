@@ -65,6 +65,8 @@ public class GalleryServiceImpl implements GalleryService{
 		//view page 에서 필요한 내용을 ModelAndView 객체에 담아준다
 		mView.addObject("list", list);
 		mView.addObject("totalPageCount", totalPageCount);
+		//pageNum 도 추가로 담아주기
+		mView.addObject("pageNum", pageNum);
 	}
 
 	@Override
