@@ -8,20 +8,23 @@
 </head>
 <body>
 <div class="container">
+	<%-- insert.do 요청을 하면서 2개의 문자열을 전송하는 게 목적 caption, image --%>
 	<form action="insert.do" method="post" id="insertForm">
+		<%-- upload 폴더에 어떤 이름으로 사진이 저장되었는지 value 가 동적으로 들어간다. --%>
 		<input type="hidden" name="imagePath" id="imagePath"/>
 		<div>
 			<label for="caption">설명</label>
 			<input type="text" name="caption" id="caption"/>
 		</div>
 	</form>
+	<%-- 첫번째폼과 연동? 된다. 여기에 파일이 올라가면 위의 폼에 value 가 동적으로 들어감. --%>
 	<form action="ajax_upload.do" method="post" id="ajaxForm" enctype="multipart/form-data">
 		<div>
 			<label for="image">이미지</label>
 			<input type="file" name="image" id="image" 
 				accept=".jpg, .jpeg, .png, .JPG, .JPEG"/>
 		</div>
-	</form>
+	</form><%-- submit 버튼이 없는데 전송이 된다. 어떻게? --%>
 	<button id="submitBtn">등록</button>
 	<div class="img-wrapper">
 		<img />
@@ -45,10 +48,11 @@
 	
 	//이미지를 선택하면 강제로 폼 전송 시키기
 	$("#image").on("change", function(){
+		// id 가 ajaxForm 인 form 을 강제 submit 시키기
 		$("#ajaxForm").submit();
 	});
 	
-	//버튼을 누르면 insertForm 강제 제출해서 이미지 정보가 저장되도록 한다.
+	//버튼을 누르면 insertForm 강제 제출해서 이미지 정보가 저장되도록 한다. submit 버튼이 없으니까.
 	$("#submitBtn").on("click", function(){
 		$("#insertForm").submit();
 	});

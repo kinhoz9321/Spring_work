@@ -49,6 +49,7 @@ public class GalleryController {
 		
 		return "gallery/private/ajax_form";
 	}
+	//확인할 점 그림 참고
 	@RequestMapping(value = "/gallery/private/ajax_upload", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> ajaxUpload(MultipartFile image, HttpServletRequest request){

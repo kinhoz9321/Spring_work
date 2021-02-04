@@ -138,9 +138,11 @@
 				data:"pageNum="+currentPage, // {pageNum:currentPage} 도 가능
 				success:function(data){
 					console.log(data);
+					//콘솔에 data 출력
 					//응답된 문자열은 html 형식이다 
 					//해당 문자열을 #galleryList div 에 html 로 해석하라고 추가한다.
 					$("#galleryList").append(data);
+					//data append html 로 해석
 					//로딩바를 숨긴다
 					$(".back-drop").hide();
 					//현재 추가된 img 요소의 부모 div 를 선택해서 imgLiquid() 동작하기
