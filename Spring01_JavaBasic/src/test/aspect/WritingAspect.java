@@ -56,7 +56,7 @@ public class WritingAspect {
 		 */
 		Object[] args=joinPoint.getArgs();
 		//인자로 전달된 String type 의 참조값 얻어내기
-		String greet=(String)args[0];
+		String greet=(String)args[0]; //0번방에 있는건 무조건 string 이야
 		boolean result=greet.contains("바보");
 		boolean result1=greet.contains("똥개");
 		if(result!=true && result1!=true) {
