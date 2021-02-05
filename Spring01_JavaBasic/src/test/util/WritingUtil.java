@@ -19,6 +19,18 @@ public class WritingUtil {
 		//System.out.println("pen 을 준비해요");
 		System.out.println("일기를 써요");
 	}
+	//어디선가 이 메소드를 호출할 것. 메소드를 수행한 다음에 호출한 위치로 리턴됨.
+	public void sendEmail(String address) {
+		System.out.println(address+" 로 이메일을 보내요!");
+	}
+	
+	public void sendGreet(String greet) {
+		System.out.println(greet+" 라는 인사말을 보내요!");
+	}
+	
+	public String getGreet() {
+		return "맛점 하세요";
+	}
 	
 }
 /*
@@ -35,4 +47,6 @@ public class WritingUtil {
  * 이 클래스를 건드리지 않고 PEN 준비해요 를 들어가게 만든다. 어떻게?
  * 
  * 어스펙트 작업
+ * 
+ * 인자를 어떻게 얻어오느냐에 대한 수업? 어렵다! 이게 뭐람!
  */
