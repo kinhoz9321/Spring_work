@@ -34,14 +34,21 @@
 		FROM users
 		WHERE id=#{id}
 	</select>
+	<!-- 
 	<select id="isValid" parameterType="usersDto" resultType="String">
 		SELECT id
 		FROM users
 		WHERE id=#{id} AND pwd=#{pwd}
 	</select>
+	 -->
 	<insert id="insert" parameterType="usersDto">
 		INSERT INTO users
 		(id, pwd, email, regdate)
 		VALUES(#{id}, #{pwd}, #{email}, SYSDATE)
 	</insert>
+	<select id="getPwd" parameterType="String" resultType="String">
+		SELECT pwd
+		FROM users
+		WHERE id=#{id}
+	</select>
 </mapper>

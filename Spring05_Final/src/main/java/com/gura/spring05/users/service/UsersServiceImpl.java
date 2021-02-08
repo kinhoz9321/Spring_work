@@ -26,10 +26,12 @@ public class UsersServiceImpl implements UsersService{
 	
 	@Override
 	public void addUser(UsersDto dto) {
-		String pwd=dto.getPwd();
 		BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
-		String savedPwd=encoder.encode(pwd);
-		dto.setPwd(savedPwd);
+		//입력한 비밀번호를 암호화 한다.
+		String encodedPwd=encoder.encode(dto.getPwd());
+		//UsersDto 에 다시 넣어준다.
+		dto.setPwd(encodedPwd);
+		//저장
 		dao.insert(dto);
 	}
 
@@ -84,11 +86,17 @@ public class UsersServiceImpl implements UsersService{
 		//1. 폼전송되는 아이디와 비밀번호를 읽어온다.
 		String id=request.getParameter("id");
 		String pwd=request.getParameter("pwd");
-		UsersDto dto=new UsersDto();
-		dto.setId(id);
-		dto.setPwd(pwd);
-		//2. DB 에 실제로 존재하는 (유효한) 정보인지 확인한다.
-		boolean isValid=dao.isValid(dto);
+		//유효한 정보인지 여부를 담을 지역변수를 만들고 초기값 false 지정
+		boolean isValid=false;
+		
+		//2. 아이디를 이용해서 암호화된 비밀번호를 SELECT 한다.
+		String savedPwd=dao.getPwd(id);
+		//3. 비밀번호가 만일 NULL 이 아니면 (존재하는 아이디)
+		if(savedPwd != null) {
+			//4. 폼 전송되는 비밀번호와 일치하는지 확인한다. (isValid true,false 갈림)
+			isValid=BCrypt.checkpw(pwd, savedPwd);
+		}
+		
 		//3. 유효한 정보이면 로그인 처리를 하고 응답 그렇지 않으면 아이디혹은 비밀번호가 틀렸다고 응답
 		if(isValid) {
 			//HttpSession 객체를 이용해서 로그인 처리를 한다.

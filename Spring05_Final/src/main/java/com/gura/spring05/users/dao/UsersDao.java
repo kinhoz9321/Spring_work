@@ -16,7 +16,9 @@ public interface UsersDao {
 	//가입정보 리턴
 	public UsersDto getData(String id);
 	//인자로 전달된 정보가 유효한 정보인지 리턴
-	public boolean isValid(UsersDto dto);
+	//public boolean isValid(UsersDto dto);
 	//회원정보를 저장
 	public void insert(UsersDto dto);
+	//인자로 전달된 아이디에 해당하는 비밀번호를 리턴하는 메소드
+	public String getPwd(String id);
 }

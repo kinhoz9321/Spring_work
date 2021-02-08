@@ -80,7 +80,7 @@ public class UsersDaoImpl implements UsersDao{
 		UsersDto dto=session.selectOne("users.getData", id);
 		return dto;
 	}
-
+	/*
 	@Override
 	public boolean isValid(UsersDto dto) {
 		
@@ -90,7 +90,7 @@ public class UsersDaoImpl implements UsersDao{
 		 * parameterType => UsersDto
 		 * resultType => String
 		 */
-		
+	/*	
 		String id=session.selectOne("users.isValid", dto);
 		if(id==null) {
 			return false;
@@ -98,11 +98,20 @@ public class UsersDaoImpl implements UsersDao{
 			return true;
 		}
 	}
-
+	*/
 	@Override
 	public void insert(UsersDto dto) {
 		session.insert("users.insert", dto);
 		
 	}
+
+	@Override
+	public String getPwd(String id) {
+		//아이디를 이용해서 저장된 비밀번호를 SELECT 해서
+		String pwd=session.selectOne("users.getPwd", id);
+		//리턴해준다.
+		return pwd;
+	}
+	//암호화된 비밀번호를 리턴해주는 것
 
 }
