@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice
 public class ExceptionController {
-	//NotAllowException type 의 예외가 발생하면 호출되는 메소드
+	//NotAllowException type 의 예외가 발생하면 호출되는 메소드 2. FileAspect 1번
 	@ExceptionHandler(NotAllowException.class)
-		public ModelAndView notAllow(NotAllowException ne) {
+		public ModelAndView notAllow(NotAllowException ne) {//NotAllowException 클래스 인자로 전달 받음
 			ModelAndView mView=new ModelAndView();
 			mView.addObject("exception", ne);
-			mView.setViewName("error/not_allow");
+			mView.setViewName("error/not_allow");//페이지 이동
 			return mView;
 		}
 	

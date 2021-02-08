@@ -149,7 +149,7 @@ public class FileServiceImpl implements FileService{
 	}
 
 	@Override
-	public void deleteFile(int num, HttpServletRequest request) {
+	public void deleteFile(int num, HttpServletRequest request) {// FileAspect의 delete*(..) 모양에 부합 / joinPoint.proceed() 메소드를 수행해도 되겠다. throw new Exception(); 메소드 수행하지 않고, 익셉션 발생 시키겠다. Exception Controller 로 간다.
 		//삭제할 파일의 정보 얻어오기 
 		FileDto dto=fileDao.getData(num);
 		/*
@@ -171,5 +171,10 @@ public class FileServiceImpl implements FileService{
 		fileDao.delete(num);
 		
 	}
+	/*
+	 * fileserviceimpl 메소드 전에 fileaspect에서  
+	 * 만일 로그인된 아이디와 파일 작성자가 다르다면을 확인하고 
+	 * 잘못되었으면 exceptionController 로 넘어간다.
+	 */
 
 }
