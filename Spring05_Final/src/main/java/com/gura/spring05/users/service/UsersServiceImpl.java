@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,6 +26,10 @@ public class UsersServiceImpl implements UsersService{
 	
 	@Override
 	public void addUser(UsersDto dto) {
+		String pwd=dto.getPwd();
+		BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+		String savedPwd=encoder.encode(pwd);
+		dto.setPwd(savedPwd);
 		dao.insert(dto);
 	}
 
@@ -81,10 +87,8 @@ public class UsersServiceImpl implements UsersService{
 		UsersDto dto=new UsersDto();
 		dto.setId(id);
 		dto.setPwd(pwd);
-		
 		//2. DB 에 실제로 존재하는 (유효한) 정보인지 확인한다.
 		boolean isValid=dao.isValid(dto);
-		
 		//3. 유효한 정보이면 로그인 처리를 하고 응답 그렇지 않으면 아이디혹은 비밀번호가 틀렸다고 응답
 		if(isValid) {
 			//HttpSession 객체를 이용해서 로그인 처리를 한다.
